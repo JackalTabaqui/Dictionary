@@ -1,0 +1,9 @@
+digraph G {
+6[label = "6: hell"];
+6->4;
+4[label = "4: is"];
+4->3;
+3[label = "3: people"];
+4->5;
+5[label = "5: other"];
+}
