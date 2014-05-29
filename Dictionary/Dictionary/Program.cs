@@ -11,15 +11,13 @@ namespace Dictionary
     // рекурсивный класс узла
     {
         public double key;
-        public string data;
         public Node parent;
         public Node left;
         public Node right;
-        public Node(double key, string data, Node left, Node right, Node parent)
+        public Node(double data, Node left, Node right, Node parent)
         // конструктор
         {
-            this.key = key;
-            this.data = data;
+            this.key = data;
             this.left = left;
             this.right = right;
             this.parent = parent;
@@ -28,10 +26,9 @@ namespace Dictionary
         {
             if (this != null)
             {
-                w.WriteLine(Convert.ToString(key) + "[label = \"" + Convert.ToString(key) + ": " + data + "\"];");
                 if (left != null)
                 {
-                    w.WriteLine(Convert.ToString(key)  + "->" + Convert.ToString(left.key) + ";");
+                    w.WriteLine(Convert.ToString(key) + "->" + Convert.ToString(left.key) + ";");
                     left.WriteNode(w);
                 }
                 if (right != null)
@@ -43,7 +40,7 @@ namespace Dictionary
         }
     }
     class DictionaryBT
-    // класс словаря, основанный на бинарном дереве
+    // класс дерева
     {
         public Node top; // корень дерева
         public double Maximum()
@@ -68,33 +65,33 @@ namespace Dictionary
             }
             else throw new InvalidOperationException("You should fill your tree first");
         }
-        private void Add(Node p, double val, string word)
+        private void Add(Node p, double val)
         // рекурсивная функция добавления элемента со значением val
         {
             if (p.key < val)
             {
                 if (p.right == null)
-                    p.right = new Node(val, word, null, null, p);
+                    p.right = new Node(val, null, null, p);
                 else
-                    Add(p.right, val, word);
+                    Add(p.right, val);
             }
             else
             {
                 if (p.left == null)
-                    p.left = new Node(val, word, null, null, p);
+                    p.left = new Node(val, null, null, p);
                 else
-                    Add(p.left, val, word);
+                    Add(p.left, val);
             }
         }
-        public void Add(double value, string word)
+        public void Add(double value)
         // "обёртка" для функции Add
         {
             if (top == null)
             {
-                top = new Node(value, word, null, null, null);
+                top = new Node(value, null, null, null);
                 return;
             }
-            Add(top, value, word);
+            Add(top, value);
         }
         private bool SearchBool(ref Node t, double k)
         // рекурсивная функция поиска элемента по значению (возвращает true/false)
@@ -127,7 +124,7 @@ namespace Dictionary
         {
             return Search(ref top, val);
         }
-        Node q = new Node(0, null, null, null, null);
+        Node q = new Node(0, null, null, null);
         private void Del(ref Node r)
         {
             if (r.right != null)
@@ -180,12 +177,6 @@ namespace Dictionary
     {
         static void Main(string[] args)
         {
-            DictionaryBT Dict = new DictionaryBT();
-            Dict.Add(6, "hell");
-            Dict.Add(4, "is");
-            Dict.Add(5, "other");
-            Dict.Add(3, "people");
-            Dict.WriteTree("dict.txt");
         }
     }
 }
